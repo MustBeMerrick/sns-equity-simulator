@@ -13,7 +13,7 @@ export function SalePricePanel({ salePrice, onChange }: Props) {
         <span className="text-2xl font-bold text-accent-700">$</span>
         <input
           type="number"
-          step="0.01"
+          step="1"
           value={salePrice}
           onChange={(e) => onChange(Number(e.target.value))}
           className="!text-2xl !font-bold !text-accent-700 !border-0 !px-0 w-32"

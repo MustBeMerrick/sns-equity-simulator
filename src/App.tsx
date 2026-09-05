@@ -10,6 +10,7 @@ import {
   sumPositions,
   weightedAvgStrike,
   vestedSharesAsOf,
+  applyTax,
   PRICE_SCENARIOS,
 } from './lib/calculations'
 
@@ -58,6 +59,8 @@ export default function App() {
           vestedShares={totals.vestedShares}
           totalPL={totals.totalPL}
           vestedPL={totals.vestedPL}
+          totalPostTaxPL={applyTax(totals.totalPL, state.taxes)}
+          vestedPostTaxPL={applyTax(totals.vestedPL, state.taxes)}
           totalProceeds={totals.totalProceeds}
           vestedProceeds={totals.vestedProceeds}
           totalCostBasis={totals.totalCost}

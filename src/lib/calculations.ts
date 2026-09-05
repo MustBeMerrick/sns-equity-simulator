@@ -135,6 +135,25 @@ export function computeSale(
   }
 }
 
+/** Combined effective tax rate (as a fraction, e.g. 0.35) across all configured tax components. */
+export function totalTaxRate(taxes: TaxAssumptions): number {
+  return (
+    (taxes.federalRate +
+      taxes.stateRate +
+      taxes.medicareRate +
+      taxes.additionalMedicareRate +
+      taxes.oasdiRate +
+      taxes.caSdiRate +
+      taxes.otherRate) /
+    100
+  )
+}
+
+/** Applies the combined tax rate to a profit figure; losses are left untaxed, matching computeTax. */
+export function applyTax(pl: number, taxes: TaxAssumptions): number {
+  return pl - Math.max(pl, 0) * totalTaxRate(taxes)
+}
+
 export interface TaxSummary {
   grossProceeds: number
   exerciseCost: number
