@@ -97,16 +97,6 @@ export function SaleSimulator({
                 className="w-20"
               />
             </label>
-            <label className="flex items-center gap-2 text-sm text-slate-600">
-              Flat fee $
-              <input
-                type="number"
-                step="1"
-                value={fees.flat}
-                onChange={(e) => onChangeFees({ ...fees, flat: Number(e.target.value) })}
-                className="w-24"
-              />
-            </label>
           </div>
         </div>
 
@@ -118,9 +108,7 @@ export function SaleSimulator({
           <hr className="border-slate-200" />
           <Row label="Gross Profit" value={fmtUSD(sale.grossProfit)} bold />
           <hr className="border-slate-200" />
-          <Row label={`Fee (${fees.percent}%)`} value={fmtUSD(sale.feePercentAmount)} />
-          <Row label="Flat Fee" value={fmtUSD(sale.feeFlatAmount)} />
-          <Row label="Total Fees" value={fmtUSD(sale.totalFees)} bold />
+          <Row label={`Fee (${fees.percent}%)`} value={fmtUSD(sale.feePercentAmount)} bold />
           <hr className="border-slate-200" />
           <Row label="NET PRE-TAX PROFIT" value={fmtUSD(sale.netPreTaxProfit)} bold accent />
         </div>

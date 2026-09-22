@@ -30,7 +30,6 @@ export interface TaxAssumptions {
 
 export interface FeeAssumptions {
   percent: number // percent of gross proceeds
-  flat: number // flat dollar fee
 }
 
 export interface AppState {

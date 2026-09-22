@@ -86,7 +86,6 @@ export interface SaleSummary {
   grossProceeds: number
   grossProfit: number
   feePercentAmount: number
-  feeFlatAmount: number
   totalFees: number
   netPreTaxProfit: number
 }
@@ -119,8 +118,7 @@ export function computeSale(
   const grossProfit = grossProceeds - exerciseCost
 
   const feePercentAmount = grossProceeds * (fees.percent / 100)
-  const feeFlatAmount = totalSold > 0 ? fees.flat : 0
-  const totalFees = feePercentAmount + feeFlatAmount
+  const totalFees = feePercentAmount
 
   return {
     perLot,
@@ -129,7 +127,6 @@ export function computeSale(
     grossProceeds,
     grossProfit,
     feePercentAmount,
-    feeFlatAmount,
     totalFees,
     netPreTaxProfit: grossProfit - totalFees,
   }

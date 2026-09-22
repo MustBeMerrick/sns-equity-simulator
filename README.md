@@ -13,7 +13,7 @@ Ships as a normal web app (`npm run dev`) or as a standalone macOS app via
 - **Position / Lot Overview** — total vs. vested shares, cost basis, proceeds, and P/L per
   lot and in aggregate, with a weighted-average strike price.
 - **Sale / Exercise Simulator** — enter shares to sell per lot, with configurable
-  percentage + flat transaction fees, and see exercise cost, proceeds, and profit.
+  percentage transaction fees, and see exercise cost, proceeds, and profit.
 - **Post-Tax Estimate** — Federal, CA State, Medicare, Additional Medicare, OASDI
   (Social Security), CA SDI, and a catch-all "Other" rate, rolled up into pre-tax profit,
   total tax, post-tax profit, and net cash proceeds.
