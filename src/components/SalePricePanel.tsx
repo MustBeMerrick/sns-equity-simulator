@@ -21,17 +21,17 @@ export function SalePricePanel({ salePrice, onChange }: Props) {
       </div>
       <input
         type="range"
-        min={50}
-        max={150}
+        min={25}
+        max={600}
         step={1}
         value={salePrice}
         onChange={(e) => onChange(Number(e.target.value))}
         className="w-full mt-2 accent-accent-600"
       />
       <div className="flex justify-between text-xs text-slate-400 mb-3">
-        <span>$50</span>
-        <span>$100</span>
-        <span>$150</span>
+        <span>$25</span>
+        <span>$300</span>
+        <span>$600</span>
       </div>
 
       <div className="pt-3 border-t border-slate-100">
