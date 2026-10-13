@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react'
 import { QuickScenarios } from './QuickScenarios'
 
 interface Props {
@@ -6,24 +7,42 @@ interface Props {
 }
 
 export function SalePricePanel({ salePrice, onChange }: Props) {
+  const [draft, setDraft] = useState(String(salePrice))
+  // Follow external changes (slider, quick scenarios) without clobbering in-progress typing.
+  useEffect(() => {
+    setDraft((d) => (Number(d) === salePrice ? d : String(salePrice)))
+  }, [salePrice])
+
+  // Move to the next whole dollar in the given direction.
+  const step = (dir: 1 | -1) => onChange(dir > 0 ? Math.floor(salePrice) + 1 : Math.ceil(salePrice) - 1)
+
   return (
     <div className="fixed top-4 right-4 z-40 card px-5 py-3 w-[272px] shadow-lg">
       <div className="text-xs uppercase tracking-wide text-slate-500 mb-1">Sale Price (per share)</div>
       <div className="flex items-center gap-3">
         <span className="text-2xl font-bold text-accent-700">$</span>
         <input
-          type="number"
-          step="1"
-          value={salePrice}
+          type="text"
+          inputMode="decimal"
+          value={draft}
           onChange={(e) => {
+            setDraft(e.target.value)
             const next = Number(e.target.value)
-            // A spinner/arrow step moves a fractional price by exactly 1; snap it to a whole dollar.
-            const isStep = !Number.isInteger(salePrice) && Math.abs(next - salePrice - Math.sign(next - salePrice)) < 1e-9
-            if (!isStep) onChange(next)
-            else onChange(next > salePrice ? Math.floor(salePrice) + 1 : Math.ceil(salePrice) - 1)
+            if (e.target.value.trim() !== '' && Number.isFinite(next)) onChange(next)
+          }}
+          onBlur={() => setDraft(String(salePrice))}
+          onKeyDown={(e) => {
+            if (e.key === 'ArrowUp' || e.key === 'ArrowDown') {
+              e.preventDefault()
+              step(e.key === 'ArrowUp' ? 1 : -1)
+            }
           }}
           className="!text-2xl !font-bold !text-accent-700 !border-0 !px-0 w-32"
         />
+        <div className="flex flex-col -ml-2">
+          <button type="button" aria-label="Increase price" onClick={() => step(1)} className="text-xs leading-none text-slate-400 hover:text-accent-700">▲</button>
+          <button type="button" aria-label="Decrease price" onClick={() => step(-1)} className="text-xs leading-none text-slate-400 hover:text-accent-700">▼</button>
+        </div>
       </div>
       <input
         type="range"
