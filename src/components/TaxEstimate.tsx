@@ -68,6 +68,7 @@ export function TaxEstimate({ taxes, onChange, tax }: Props) {
           <hr className="border-slate-200" />
           <Row label="Pre-Tax Profit" value={fmtUSD(tax.preTaxProfit)} bold />
           <hr className="border-slate-200" />
+          <Row label="Taxable Amount (Gross - Exercise)" value={fmtUSD(tax.taxableProfit)} />
           <Row label="Federal Tax" value={`-${fmtUSD(tax.federalTax)}`} />
           <Row label="State Tax" value={`-${fmtUSD(tax.stateTax)}`} />
           {tax.medicareTax > 0 && <Row label="Medicare" value={`-${fmtUSD(tax.medicareTax)}`} />}
