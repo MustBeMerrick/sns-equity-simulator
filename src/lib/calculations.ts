@@ -156,7 +156,6 @@ export interface TaxSummary {
   exerciseCost: number
   fees: number
   preTaxProfit: number
-  taxableProfit: number
   federalTax: number
   stateTax: number
   medicareTax: number
@@ -170,8 +169,8 @@ export interface TaxSummary {
 }
 
 export function computeTax(sale: SaleSummary, taxes: TaxAssumptions): TaxSummary {
-  const preTaxProfit = sale.netPreTaxProfit
-  const taxableProfit = Math.max(sale.grossProfit, 0)
+  const preTaxProfit = sale.grossProfit
+  const taxableProfit = Math.max(preTaxProfit, 0)
   const rate = (r: number) => taxableProfit * (r / 100)
   const federalTax = rate(taxes.federalRate)
   const stateTax = rate(taxes.stateRate)
@@ -181,7 +180,7 @@ export function computeTax(sale: SaleSummary, taxes: TaxAssumptions): TaxSummary
   const caSdiTax = rate(taxes.caSdiRate)
   const otherTax = rate(taxes.otherRate)
   const totalTax = federalTax + stateTax + medicareTax + additionalMedicareTax + oasdiTax + caSdiTax + otherTax
-  const postTaxProfit = preTaxProfit - totalTax
+  const postTaxProfit = preTaxProfit - sale.totalFees - totalTax
   const netCashProceeds = sale.grossProceeds - sale.exerciseCost - sale.totalFees - totalTax
 
   return {
@@ -189,7 +188,6 @@ export function computeTax(sale: SaleSummary, taxes: TaxAssumptions): TaxSummary
     exerciseCost: sale.exerciseCost,
     fees: sale.totalFees,
     preTaxProfit,
-    taxableProfit,
     federalTax,
     stateTax,
     medicareTax,
