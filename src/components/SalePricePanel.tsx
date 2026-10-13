@@ -17,14 +17,10 @@ export function SalePricePanel({ salePrice, onChange }: Props) {
           value={salePrice}
           onChange={(e) => {
             const next = Number(e.target.value)
-            // Spinner/arrow-key changes aren't InputEvents; typing is.
-            const isStep = !(e.nativeEvent instanceof InputEvent)
-            if (isStep && next !== salePrice) {
-              // Ignore the browser's computed value; it can carry the old fraction.
-              onChange(next > salePrice ? Math.floor(salePrice) + 1 : Math.ceil(salePrice) - 1)
-            } else {
-              onChange(next)
-            }
+            // A spinner/arrow step moves a fractional price by exactly 1; snap it to a whole dollar.
+            const isStep = !Number.isInteger(salePrice) && Math.abs(next - salePrice - Math.sign(next - salePrice)) < 1e-9
+            if (!isStep) onChange(next)
+            else onChange(next > salePrice ? Math.floor(salePrice) + 1 : Math.ceil(salePrice) - 1)
           }}
           className="!text-2xl !font-bold !text-accent-700 !border-0 !px-0 w-32"
         />
