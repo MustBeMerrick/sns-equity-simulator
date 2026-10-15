@@ -37,7 +37,7 @@ export function LotsManager({ lots, onAdd, onUpdate, onDelete }: Props) {
         )}
       </div>
 
-      <div className="p-5 flex flex-col gap-3">
+      <div className="p-3 sm:p-5 flex flex-col gap-3">
         {lots.length === 0 && mode === 'closed' && (
           <p className="text-sm text-slate-500">
             No lots yet. Add your first grant — strike price, share quantity, and vesting schedule — to get
@@ -60,24 +60,24 @@ export function LotsManager({ lots, onAdd, onUpdate, onDelete }: Props) {
           ) : (
             <div
               key={lot.id}
-              className="flex items-center justify-between border border-slate-200 rounded-lg px-4 py-2.5"
+              className="flex items-start sm:items-center justify-between gap-3 border border-slate-200 rounded-lg px-3 sm:px-4 py-2.5"
             >
-              <div className="flex items-center gap-6 text-sm">
-                <span className="font-medium w-20">{lot.label}</span>
+              <div className="flex flex-wrap items-center gap-x-4 gap-y-0.5 sm:gap-6 text-sm">
+                <span className="font-medium w-full sm:w-20">{lot.label}</span>
                 <span className="text-slate-500">Strike ${lot.strike.toFixed(2)}</span>
                 <span className="text-slate-500">{fmtNumber(lot.totalShares)} shares</span>
                 <span className="text-slate-500">{fmtNumber(vestedSharesAsOf(lot))} vested</span>
               </div>
-              <div className="flex gap-2">
+              <div className="flex gap-3 sm:gap-2">
                 <button
                   onClick={() => setMode(lot.id)}
-                  className="text-xs text-accent-700 hover:underline"
+                  className="py-1 sm:py-0 text-xs text-accent-700 hover:underline"
                 >
                   Edit
                 </button>
                 <button
                   onClick={() => onDelete(lot.id)}
-                  className="text-xs text-slate-400 hover:text-red-600"
+                  className="py-1 sm:py-0 text-xs text-slate-400 hover:text-red-600"
                 >
                   Delete
                 </button>

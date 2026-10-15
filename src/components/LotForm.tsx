@@ -64,7 +64,7 @@ export function LotForm({ initial, nextLabel, onSave, onCancel }: Props) {
   }
 
   return (
-    <div className="border border-accent-200 rounded-lg p-4 bg-accent-50/40 flex flex-col gap-4">
+    <div className="border border-accent-200 rounded-lg p-3 sm:p-4 bg-accent-50/40 flex flex-col gap-4">
       <div className="grid sm:grid-cols-3 gap-3">
         <label className="flex flex-col gap-1 text-sm text-slate-600">
           Lot Label
@@ -80,6 +80,7 @@ export function LotForm({ initial, nextLabel, onSave, onCancel }: Props) {
           <input
             type="number"
             step="0.01"
+            inputMode="decimal"
             value={strike}
             onChange={(e) => setStrike(Number(e.target.value))}
             onFocus={selectOnZero}
@@ -90,6 +91,7 @@ export function LotForm({ initial, nextLabel, onSave, onCancel }: Props) {
           <input
             type="number"
             step="1"
+            inputMode="numeric"
             value={totalShares}
             onChange={(e) => setTotalShares(Number(e.target.value))}
             onFocus={selectOnZero}
@@ -100,7 +102,7 @@ export function LotForm({ initial, nextLabel, onSave, onCancel }: Props) {
       <div>
         <div className="text-xs uppercase tracking-wide text-slate-500 mb-2">Vesting Schedule</div>
 
-        <div className="flex gap-1 mb-3 text-xs">
+        <div className="flex flex-wrap gap-1 mb-3 text-xs">
           {(
             [
               ['standard', 'Standard (Cliff + Monthly)'],
@@ -111,7 +113,7 @@ export function LotForm({ initial, nextLabel, onSave, onCancel }: Props) {
             <button
               key={m}
               onClick={() => setMethod(m)}
-              className={`px-2.5 py-1 rounded-md border ${
+              className={`px-2.5 py-1.5 sm:py-1 rounded-md border ${
                 method === m
                   ? 'bg-accent-600 border-accent-600 text-white'
                   : 'border-slate-200 text-slate-600 hover:border-accent-300'
@@ -203,6 +205,7 @@ export function LotForm({ initial, nextLabel, onSave, onCancel }: Props) {
                       <td>
                         <input
                           type="number"
+                          inputMode="numeric"
                           value={row.shares}
                           onChange={(e) => updateRow(i, { shares: Number(e.target.value) })}
                           onFocus={selectOnZero}
@@ -226,7 +229,7 @@ export function LotForm({ initial, nextLabel, onSave, onCancel }: Props) {
           </div>
         )}
 
-        <div className="flex items-center justify-between mt-2">
+        <div className="flex flex-wrap items-center justify-between gap-2 mt-2">
           <button onClick={addRow} className="text-xs text-accent-700 hover:underline">
             + Add row manually
           </button>

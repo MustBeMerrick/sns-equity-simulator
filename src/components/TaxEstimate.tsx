@@ -19,7 +19,7 @@ export function TaxEstimate({ taxes, onChange, tax }: Props) {
         Post-Tax Estimate
       </div>
 
-      <div className="grid lg:grid-cols-2 gap-6 p-5">
+      <div className="grid lg:grid-cols-2 gap-6 p-4 sm:p-5">
         <div>
           <div className="text-xs uppercase tracking-wide text-slate-500 mb-2">Tax Assumptions</div>
           <div className="flex flex-col gap-3">
@@ -109,6 +109,7 @@ function RateInput({
         <input
           type="number"
           step="0.1"
+          inputMode="decimal"
           value={value}
           onChange={(e) => onChange(Number(e.target.value))}
           onFocus={selectOnZero}

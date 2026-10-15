@@ -53,7 +53,8 @@ export function SummaryCards({
         <span className="text-xl font-bold">{fmtUSD(totalProceeds)}</span>
         <span className="text-xs text-slate-400">Vested {fmtUSD(vestedProceeds)}</span>
       </div>
-      <div className="stat-tile">
+      {/* Odd tile out on the 2-column phone grid: span the full row */}
+      <div className="stat-tile col-span-2 sm:col-span-1">
         <span className="text-xs text-slate-500">Cost Basis</span>
         <span className="text-xl font-bold">{fmtUSD(totalCostBasis)}</span>
         <span className="text-xs text-slate-400">Vested {fmtUSD(vestedCostBasis)}</span>

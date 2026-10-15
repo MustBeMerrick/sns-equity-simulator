@@ -36,7 +36,7 @@ export function SaleSimulator({
       {lots.length === 0 ? (
         <p className="px-5 py-6 text-sm text-slate-500">Add a lot above to start simulating a sale.</p>
       ) : (
-      <div className="grid lg:grid-cols-2 gap-6 p-5">
+      <div className="grid lg:grid-cols-2 gap-6 p-4 sm:p-5">
         {/* Inputs */}
         <div>
           <table className="w-full">
@@ -59,10 +59,11 @@ export function SaleSimulator({
                         type="number"
                         min={0}
                         max={vested}
+                        inputMode="numeric"
                         value={sharesSold[lot.id] ?? 0}
                         onChange={(e) => onChangeSold(lot.id, Number(e.target.value))}
                         onFocus={selectOnZero}
-                        className="w-28"
+                        className="w-24 sm:w-28"
                       />
                     </td>
                   </tr>
@@ -86,12 +87,13 @@ export function SaleSimulator({
             </button>
           </div>
 
-          <div className="mt-5 flex items-center gap-6">
+          <div className="mt-5 flex flex-wrap items-center gap-x-6 gap-y-3">
             <label className="flex items-center gap-2 text-sm text-slate-600">
               Fee %
               <input
                 type="number"
                 step="0.1"
+                inputMode="decimal"
                 value={fees.percent}
                 onChange={(e) => onChangeFees({ ...fees, percent: Number(e.target.value) })}
                 className="w-20"
@@ -126,7 +128,7 @@ export function SaleSimulator({
       {/* Per-lot breakdown */}
       {lots.length > 0 && (
       <div className="overflow-x-auto border-t border-slate-100">
-        <table className="w-full">
+        <table className="w-full sticky-first whitespace-nowrap sm:whitespace-normal">
           <thead>
             <tr>
               <th>Lot</th>

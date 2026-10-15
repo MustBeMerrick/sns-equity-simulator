@@ -51,7 +51,7 @@ export default function App() {
     <div className="min-h-screen sm:pr-[300px]">
       <SalePricePanel salePrice={state.salePrice} onChange={(salePrice) => setState((s) => ({ ...s, salePrice }))} />
 
-      <div className="px-4 py-6 sm:px-8 max-w-6xl mx-auto flex flex-col gap-6">
+      <div className="px-3 py-4 gap-4 sm:px-8 sm:py-6 sm:gap-6 max-w-6xl mx-auto flex flex-col">
         <Header />
 
         <SummaryCards

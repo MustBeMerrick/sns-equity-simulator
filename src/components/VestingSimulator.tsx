@@ -47,19 +47,19 @@ export function VestingSimulator({ months, salePrice }: Props) {
   return (
     <section className="card">
       <div className="card-header flex-wrap justify-between">
-        <div className="flex items-center gap-2">
+        <div className="flex flex-wrap items-center gap-2">
           <span className="w-6 h-6 rounded-full bg-accent-100 text-accent-700 text-xs flex items-center justify-center">
             4
           </span>
           Future Vesting Value Simulator
           <span className="text-xs font-normal text-slate-400">@ {fmtUSD(salePrice)}/share</span>
         </div>
-        <div className="flex gap-1 text-xs">
+        <div className="flex flex-wrap gap-1 text-xs">
           {(Object.keys(METRIC_LABEL) as Metric[]).map((m) => (
             <button
               key={m}
               onClick={() => setMetric(m)}
-              className={`px-2.5 py-1 rounded-md border ${
+              className={`px-2.5 py-1.5 sm:py-1 rounded-md border ${
                 metric === m
                   ? 'bg-accent-600 border-accent-600 text-white'
                   : 'border-slate-200 text-slate-600 hover:border-accent-300'
@@ -71,7 +71,7 @@ export function VestingSimulator({ months, salePrice }: Props) {
         </div>
       </div>
 
-      <div className="p-5">
+      <div className="p-4 sm:p-5">
         <div className="flex items-end gap-2 overflow-x-auto pb-1">
           {months.map((m) => {
             const value = metricValue(m, metric)
@@ -95,7 +95,7 @@ export function VestingSimulator({ months, salePrice }: Props) {
       </div>
 
       <div className="overflow-x-auto border-t border-slate-100">
-        <table className="w-full">
+        <table className="w-full sticky-first whitespace-nowrap sm:whitespace-normal">
           <thead>
             <tr>
               <th>Month</th>

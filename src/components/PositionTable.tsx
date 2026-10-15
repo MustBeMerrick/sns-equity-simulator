@@ -28,7 +28,7 @@ export function PositionTable({ positions, totals, avgStrike }: Props) {
         <p className="px-5 py-6 text-sm text-slate-500">Add a lot above to see your position summary.</p>
       ) : (
       <div className="overflow-x-auto">
-        <table className="w-full">
+        <table className="w-full sticky-first whitespace-nowrap sm:whitespace-normal">
           <thead>
             <tr>
               <th rowSpan={2} className="align-bottom">Lot</th>
