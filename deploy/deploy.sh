@@ -24,7 +24,7 @@ cmd_deploy() {
   ssh "$HOST" "mkdir -p ~/$SRC"
   rsync -az --delete "$tmp"/ "$HOST:$SRC/"
   ssh "$HOST" "set -e; cd ~/$SRC; $COMPOSE build app; $COMPOSE up -d app"
-  echo "deployed $(git rev-parse --short HEAD) -> http://gmktec.local:${SES_PORT:-3004}"
+  echo "deployed $(git rev-parse --short HEAD) -> https://snequity.mustbemerrick.com"
 }
 
 cmd_logs()    { ssh "$HOST" "cd ~/$SRC && $COMPOSE logs -f --tail=200 app"; }

@@ -10,7 +10,9 @@ services:
     image: sns-equity-simulator
     restart: unless-stopped
     ports:
-      - "${SES_PORT:-3004}:80"
+      # Bound to loopback only: cloudflared runs on this host and reaches the
+      # app via localhost, so there's no need to publish this on the LAN.
+      - "127.0.0.1:${SES_PORT:-3004}:80"
     healthcheck:
       test: ["CMD", "wget", "-qO", "/dev/null", "http://127.0.0.1:80/"]
       interval: 60s
