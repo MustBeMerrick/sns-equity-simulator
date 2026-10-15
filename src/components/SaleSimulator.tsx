@@ -97,6 +97,14 @@ export function SaleSimulator({
                 className="w-20"
               />
             </label>
+            <label className="flex items-center gap-2 text-sm text-slate-600">
+              <input
+                type="checkbox"
+                checked={fees.deductBeforeTax}
+                onChange={(e) => onChangeFees({ ...fees, deductBeforeTax: e.target.checked })}
+              />
+              Deduct fees before tax
+            </label>
           </div>
         </div>
 

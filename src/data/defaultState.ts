@@ -4,7 +4,7 @@ export const defaultState: AppState = {
   salePrice: 110,
   lots: [],
   sharesSold: {},
-  fees: { percent: 2.5 },
+  fees: { percent: 2.5, deductBeforeTax: false },
   taxes: {
     federalRate: 37,
     stateRate: 13.3,

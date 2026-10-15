@@ -155,6 +155,7 @@ export interface TaxSummary {
   grossProceeds: number
   exerciseCost: number
   fees: number
+  feesBeforeTax: boolean
   preTaxProfit: number
   federalTax: number
   stateTax: number
@@ -168,8 +169,8 @@ export interface TaxSummary {
   netCashProceeds: number
 }
 
-export function computeTax(sale: SaleSummary, taxes: TaxAssumptions): TaxSummary {
-  const preTaxProfit = sale.grossProfit
+export function computeTax(sale: SaleSummary, taxes: TaxAssumptions, fees: FeeAssumptions): TaxSummary {
+  const preTaxProfit = fees.deductBeforeTax ? sale.grossProfit - sale.totalFees : sale.grossProfit
   const taxableProfit = Math.max(preTaxProfit, 0)
   const rate = (r: number) => taxableProfit * (r / 100)
   const federalTax = rate(taxes.federalRate)
@@ -180,13 +181,14 @@ export function computeTax(sale: SaleSummary, taxes: TaxAssumptions): TaxSummary
   const caSdiTax = rate(taxes.caSdiRate)
   const otherTax = rate(taxes.otherRate)
   const totalTax = federalTax + stateTax + medicareTax + additionalMedicareTax + oasdiTax + caSdiTax + otherTax
-  const postTaxProfit = preTaxProfit - sale.totalFees - totalTax
+  const postTaxProfit = preTaxProfit - (fees.deductBeforeTax ? 0 : sale.totalFees) - totalTax
   const netCashProceeds = sale.grossProceeds - sale.exerciseCost - sale.totalFees - totalTax
 
   return {
     grossProceeds: sale.grossProceeds,
     exerciseCost: sale.exerciseCost,
     fees: sale.totalFees,
+    feesBeforeTax: fees.deductBeforeTax,
     preTaxProfit,
     federalTax,
     stateTax,
@@ -273,7 +275,7 @@ export function computeSensitivity(state: AppState, prices: number[]) {
       price,
       state.fees,
     )
-    const tax = computeTax(sale, state.taxes)
+    const tax = computeTax(sale, state.taxes, state.fees)
     return {
       price,
       vestedValue: totals.vestedProceeds,

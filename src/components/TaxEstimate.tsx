@@ -64,12 +64,13 @@ export function TaxEstimate({ taxes, onChange, tax }: Props) {
         <div className="flex flex-col gap-2 text-sm">
           <Row label="Gross Proceeds" value={fmtUSD(tax.grossProceeds)} />
           <Row label="Exercise Cost" value={`-${fmtUSD(tax.exerciseCost)}`} />
+          {tax.feesBeforeTax && <Row label="Transaction Fees" value={`-${fmtUSD(tax.fees)}`} />}
           <hr className="border-slate-200" />
           <Row label="Pre-Tax Profit" value={fmtUSD(tax.preTaxProfit)} bold />
           <hr className="border-slate-200" />
           <Row label="Federal Tax" value={`-${fmtUSD(tax.federalTax)}`} />
           <Row label="State Tax" value={`-${fmtUSD(tax.stateTax)}`} />
-          <Row label="Transaction Fees" value={`-${fmtUSD(tax.fees)}`} />
+          {!tax.feesBeforeTax && <Row label="Transaction Fees" value={`-${fmtUSD(tax.fees)}`} />}
           {tax.medicareTax > 0 && <Row label="Medicare" value={`-${fmtUSD(tax.medicareTax)}`} />}
           {tax.additionalMedicareTax > 0 && (
             <Row label="Additional Medicare" value={`-${fmtUSD(tax.additionalMedicareTax)}`} />

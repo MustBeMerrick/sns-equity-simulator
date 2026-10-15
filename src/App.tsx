@@ -35,7 +35,7 @@ export default function App() {
     () => computeSale(state.lots, state.sharesSold, state.salePrice, state.fees),
     [state.lots, state.sharesSold, state.salePrice, state.fees],
   )
-  const tax = useMemo(() => computeTax(sale, state.taxes), [sale, state.taxes])
+  const tax = useMemo(() => computeTax(sale, state.taxes, state.fees), [sale, state.taxes, state.fees])
   const months = useMemo(
     () => computeMonthlyVesting(state.lots, state.salePrice, state.taxes),
     [state.lots, state.salePrice, state.taxes],

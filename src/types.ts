@@ -30,6 +30,7 @@ export interface TaxAssumptions {
 
 export interface FeeAssumptions {
   percent: number // percent of gross proceeds
+  deductBeforeTax: boolean // fees reduce taxable profit (above the line) vs. paid out of post-tax profit
 }
 
 export interface AppState {
