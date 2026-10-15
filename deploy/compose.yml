@@ -1,0 +1,19 @@
+# Run from the server: ~/apps/sns-equity-simulator/src/deploy/compose.yml
+# Static site only: app state lives in each browser's localStorage, so there's no data volume.
+name: sns-equity-simulator
+
+services:
+  app:
+    build:
+      context: ..
+      dockerfile: deploy/Dockerfile
+    image: sns-equity-simulator
+    restart: unless-stopped
+    ports:
+      - "${SES_PORT:-3004}:80"
+    healthcheck:
+      test: ["CMD", "wget", "-qO", "/dev/null", "http://127.0.0.1:80/"]
+      interval: 60s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
