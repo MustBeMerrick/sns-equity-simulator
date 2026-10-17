@@ -1,6 +1,14 @@
+/// Writes an export file to a path the user picked in the native save dialog.
+#[tauri::command]
+fn write_text_file(path: String, contents: String) -> Result<(), String> {
+  std::fs::write(&path, contents).map_err(|e| e.to_string())
+}
+
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
   tauri::Builder::default()
+    .plugin(tauri_plugin_dialog::init())
+    .invoke_handler(tauri::generate_handler![write_text_file])
     .setup(|app| {
       if cfg!(debug_assertions) {
         app.handle().plugin(

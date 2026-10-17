@@ -8,17 +8,22 @@ function load(): AppState {
   try {
     const raw = localStorage.getItem(STORAGE_KEY)
     if (!raw) return defaultState
-    const parsed = JSON.parse(raw) as AppState
-    // Shallow-merge so new fields added later fall back to defaults. `taxes` and `fees`
-    // are merged one level deeper since they're nested objects that also gain new fields over time.
-    return {
-      ...defaultState,
-      ...parsed,
-      fees: { ...defaultState.fees, ...parsed.fees },
-      taxes: { ...defaultState.taxes, ...parsed.taxes },
-    }
+    return withDefaults(JSON.parse(raw) as AppState)
   } catch {
     return defaultState
+  }
+}
+
+/**
+ * Shallow-merge so new fields added later fall back to defaults. `taxes` and `fees`
+ * are merged one level deeper since they're nested objects that also gain new fields over time.
+ */
+export function withDefaults(parsed: Partial<AppState>): AppState {
+  return {
+    ...defaultState,
+    ...parsed,
+    fees: { ...defaultState.fees, ...parsed.fees },
+    taxes: { ...defaultState.taxes, ...parsed.taxes },
   }
 }
 

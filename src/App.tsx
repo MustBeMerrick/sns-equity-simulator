@@ -1,6 +1,7 @@
 import { useMemo } from 'react'
 import type { Lot, LotId } from './types'
 import { useAppState, resetState } from './hooks/useAppState'
+import { exportState, parseBackup } from './lib/backup'
 import {
   computePositions,
   computeSale,
@@ -81,6 +82,22 @@ export default function App() {
               return { ...s, lots: s.lots.filter((l) => l.id !== id), sharesSold: restSold }
             })
           }
+          onExport={() => exportState(state).catch((e) => alert(`Export failed: ${e}`))}
+          onImport={async (file) => {
+            try {
+              const imported = parseBackup(await file.text())
+              const n = imported.lots.length
+              if (
+                state.lots.length > 0 &&
+                !confirm(`Replace your current lots and settings with the ${n} lot${n === 1 ? '' : 's'} in this file?`)
+              ) {
+                return
+              }
+              setState(imported)
+            } catch (e) {
+              alert(e instanceof Error ? e.message : String(e))
+            }
+          }}
         />
 
         <PositionTable positions={positions} totals={totals} avgStrike={avgStrike} />

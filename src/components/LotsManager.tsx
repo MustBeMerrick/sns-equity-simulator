@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import type { Lot } from '../types'
 import { vestedSharesAsOf } from '../lib/calculations'
 import { fmtNumber } from '../lib/format'
@@ -9,6 +9,8 @@ interface Props {
   onAdd: (lot: Lot) => void
   onUpdate: (lot: Lot) => void
   onDelete: (id: string) => void
+  onExport: () => void
+  onImport: (file: File) => void
 }
 
 function nextLabel(lots: Lot[]): string {
@@ -20,20 +22,42 @@ function nextLabel(lots: Lot[]): string {
   return `Lot ${lots.length + 1}`
 }
 
-export function LotsManager({ lots, onAdd, onUpdate, onDelete }: Props) {
+export function LotsManager({ lots, onAdd, onUpdate, onDelete, onExport, onImport }: Props) {
   const [mode, setMode] = useState<'closed' | 'add' | string>('closed')
+  const fileInput = useRef<HTMLInputElement>(null)
 
   return (
     <section className="card">
       <div className="card-header justify-between">
         <span>Your Lots</span>
         {mode === 'closed' && (
-          <button
-            onClick={() => setMode('add')}
-            className="px-3 py-1.5 text-sm rounded-md bg-accent-600 text-white hover:bg-accent-700"
-          >
-            + Add Lot
-          </button>
+          <div className="flex items-center gap-3">
+            <button onClick={() => fileInput.current?.click()} className="text-xs text-accent-700 hover:underline">
+              Import
+            </button>
+            {lots.length > 0 && (
+              <button onClick={onExport} className="text-xs text-accent-700 hover:underline">
+                Export
+              </button>
+            )}
+            <button
+              onClick={() => setMode('add')}
+              className="px-3 py-1.5 text-sm rounded-md bg-accent-600 text-white hover:bg-accent-700"
+            >
+              + Add Lot
+            </button>
+            {/* No `accept` filter: iOS greys out files with unrecognized extensions like .sns */}
+            <input
+              ref={fileInput}
+              type="file"
+              className="hidden"
+              onChange={(e) => {
+                const file = e.target.files?.[0]
+                e.target.value = ''
+                if (file) onImport(file)
+              }}
+            />
+          </div>
         )}
       </div>
 
