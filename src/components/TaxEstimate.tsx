@@ -1,7 +1,7 @@
 import type { TaxAssumptions } from '../types'
 import type { TaxSummary } from '../lib/calculations'
 import { fmtUSD } from '../lib/format'
-import { selectOnZero } from '../lib/inputHelpers'
+import { NumberInput } from './NumberInput'
 
 interface Props {
   taxes: TaxAssumptions
@@ -106,15 +106,7 @@ function RateInput({
     <label className="flex items-center justify-between text-sm text-slate-600 gap-3">
       {label}
       <span className="flex items-center gap-1">
-        <input
-          type="number"
-          step="0.1"
-          inputMode="decimal"
-          value={value}
-          onChange={(e) => onChange(Number(e.target.value))}
-          onFocus={selectOnZero}
-          className="w-20"
-        />
+        <NumberInput step="0.1" inputMode="decimal" value={value} onChange={onChange} className="w-20" />
         %
       </span>
     </label>

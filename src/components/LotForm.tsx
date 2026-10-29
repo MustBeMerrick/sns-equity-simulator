@@ -2,7 +2,7 @@ import { useState } from 'react'
 import type { Lot, VestEvent } from '../types'
 import { addMonthsClamped, generateStandardVesting, parsePastedVesting, sumVesting } from '../lib/vesting'
 import { fmtNumber } from '../lib/format'
-import { selectOnZero } from '../lib/inputHelpers'
+import { NumberInput } from './NumberInput'
 
 type Method = 'standard' | 'paste' | 'manual'
 
@@ -77,25 +77,11 @@ export function LotForm({ initial, nextLabel, onSave, onCancel }: Props) {
         </label>
         <label className="flex flex-col gap-1 text-sm text-slate-600">
           Strike Price ($)
-          <input
-            type="number"
-            step="0.01"
-            inputMode="decimal"
-            value={strike}
-            onChange={(e) => setStrike(Number(e.target.value))}
-            onFocus={selectOnZero}
-          />
+          <NumberInput step="0.01" inputMode="decimal" value={strike} onChange={setStrike} />
         </label>
         <label className="flex flex-col gap-1 text-sm text-slate-600">
           Quantity (Total Shares)
-          <input
-            type="number"
-            step="1"
-            inputMode="numeric"
-            value={totalShares}
-            onChange={(e) => setTotalShares(Number(e.target.value))}
-            onFocus={selectOnZero}
-          />
+          <NumberInput step="1" inputMode="numeric" value={totalShares} onChange={setTotalShares} />
         </label>
       </div>
 
@@ -132,21 +118,11 @@ export function LotForm({ initial, nextLabel, onSave, onCancel }: Props) {
             </label>
             <label className="flex flex-col gap-1 text-slate-600">
               Cliff (months)
-              <input
-                type="number"
-                value={cliffMonths}
-                onChange={(e) => setCliffMonths(Number(e.target.value))}
-                className="w-24"
-              />
+              <NumberInput inputMode="numeric" value={cliffMonths} onChange={setCliffMonths} className="w-24" />
             </label>
             <label className="flex flex-col gap-1 text-slate-600">
               Total Vesting (months)
-              <input
-                type="number"
-                value={totalMonths}
-                onChange={(e) => setTotalMonths(Number(e.target.value))}
-                className="w-28"
-              />
+              <NumberInput inputMode="numeric" value={totalMonths} onChange={setTotalMonths} className="w-28" />
             </label>
             <button
               onClick={handleGenerate}
@@ -203,12 +179,10 @@ export function LotForm({ initial, nextLabel, onSave, onCancel }: Props) {
                         />
                       </td>
                       <td>
-                        <input
-                          type="number"
+                        <NumberInput
                           inputMode="numeric"
                           value={row.shares}
-                          onChange={(e) => updateRow(i, { shares: Number(e.target.value) })}
-                          onFocus={selectOnZero}
+                          onChange={(v) => updateRow(i, { shares: v })}
                           className="w-24"
                         />
                       </td>

@@ -1,4 +1,4 @@
-import { useEffect, useState, type CSSProperties, type MouseEvent, type PointerEvent } from 'react'
+import { useEffect, useRef, useState, type CSSProperties, type MouseEvent, type PointerEvent } from 'react'
 import { QuickScenarios } from './QuickScenarios'
 
 interface Props {
@@ -12,6 +12,8 @@ export function SalePricePanel({ salePrice, onChange }: Props) {
   useEffect(() => {
     setDraft((d) => (Number(d) === salePrice ? d : String(salePrice)))
   }, [salePrice])
+  // Value at focus time: restored on Escape or when the field is left empty.
+  const original = useRef(salePrice)
 
   // Move to the next whole dollar in the given direction.
   const step = (dir: 1 | -1) => onChange(dir > 0 ? Math.floor(salePrice) + 1 : Math.ceil(salePrice) - 1)
@@ -53,11 +55,25 @@ export function SalePricePanel({ salePrice, onChange }: Props) {
                   const next = Number(e.target.value)
                   if (e.target.value.trim() !== '' && Number.isFinite(next)) onChange(next)
                 }}
-                onBlur={() => setDraft(String(salePrice))}
+                // Clear on focus so typing starts a fresh value; empty/invalid on blur falls back to the old one.
+                onFocus={() => {
+                  original.current = salePrice
+                  setDraft('')
+                }}
+                onBlur={() => {
+                  if (draft.trim() === '' || !Number.isFinite(Number(draft))) onChange(original.current)
+                  setDraft(String(draft.trim() === '' ? original.current : salePrice))
+                }}
                 onKeyDown={(e) => {
                   if (e.key === 'ArrowUp' || e.key === 'ArrowDown') {
                     e.preventDefault()
                     step(e.key === 'ArrowUp' ? 1 : -1)
+                  } else if (e.key === 'Escape') {
+                    onChange(original.current)
+                    setDraft(String(original.current))
+                    e.currentTarget.blur()
+                  } else if (e.key === 'Enter') {
+                    e.currentTarget.blur()
                   }
                 }}
                 // Phones size the field to its text so "/sh" centers under the digits, not the empty box.

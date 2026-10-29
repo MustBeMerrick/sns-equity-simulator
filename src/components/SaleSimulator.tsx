@@ -1,7 +1,7 @@
 import type { Lot, LotId, FeeAssumptions } from '../types'
 import { vestedSharesAsOf, type SaleSummary } from '../lib/calculations'
 import { fmtNumber, fmtUSD } from '../lib/format'
-import { selectOnZero } from '../lib/inputHelpers'
+import { NumberInput } from './NumberInput'
 
 interface Props {
   lots: Lot[]
@@ -55,14 +55,12 @@ export function SaleSimulator({
                     <td className="font-medium">{lot.label}</td>
                     <td>{fmtNumber(vested)}</td>
                     <td>
-                      <input
-                        type="number"
+                      <NumberInput
                         min={0}
                         max={vested}
                         inputMode="numeric"
                         value={sharesSold[lot.id] ?? 0}
-                        onChange={(e) => onChangeSold(lot.id, Number(e.target.value))}
-                        onFocus={selectOnZero}
+                        onChange={(v) => onChangeSold(lot.id, v)}
                         className="w-24 sm:w-28"
                       />
                     </td>
@@ -90,12 +88,11 @@ export function SaleSimulator({
           <div className="mt-5 flex flex-wrap items-center gap-x-6 gap-y-3">
             <label className="flex items-center gap-2 text-sm text-slate-600">
               Fee %
-              <input
-                type="number"
+              <NumberInput
                 step="0.1"
                 inputMode="decimal"
                 value={fees.percent}
-                onChange={(e) => onChangeFees({ ...fees, percent: Number(e.target.value) })}
+                onChange={(v) => onChangeFees({ ...fees, percent: v })}
                 className="w-20"
               />
             </label>
