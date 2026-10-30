@@ -34,7 +34,7 @@ export function SalePricePanel({ salePrice, onChange }: Props) {
 
   return (
     // Phone: a compact bar pinned to the top of the page. sm+: floating card in the top-right corner.
-    <div className="sticky top-0 z-40 card rounded-none border-x-0 border-t-0 px-3 py-2 sm:fixed sm:top-4 sm:right-4 sm:rounded-xl sm:border sm:px-5 sm:py-3 sm:w-[272px] shadow-lg">
+    <div className="sticky top-0 z-40 card rounded-none border-x-0 border-t-0 px-3 py-2 sm:fixed sm:top-4 sm:right-4 sm:rounded-xl sm:border sm:px-5 sm:py-3 sm:w-[500px] shadow-lg">
       <div className="hidden sm:block text-xs uppercase tracking-wide text-slate-500 mb-1">Sale Price (per share)</div>
       {/* Price and slider share a row on phones, stack on sm+ */}
       <div className="flex items-center gap-3 sm:block">

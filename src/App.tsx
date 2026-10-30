@@ -47,9 +47,9 @@ export default function App() {
   )
 
   return (
-    // sm:pr-[300px] reserves room for the fixed SalePricePanel so it never overlaps
+    // sm:pr-[528px] reserves room for the fixed SalePricePanel so it never overlaps
     // the centered content column, regardless of window width.
-    <div className="min-h-screen sm:pr-[300px]">
+    <div className="min-h-screen sm:pr-[528px]">
       <SalePricePanel salePrice={state.salePrice} onChange={(salePrice) => setState((s) => ({ ...s, salePrice }))} />
 
       <div className="px-3 py-4 gap-4 sm:px-8 sm:py-6 sm:gap-6 max-w-6xl mx-auto flex flex-col">

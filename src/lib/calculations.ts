@@ -261,8 +261,10 @@ export const PRICE_SCENARIOS = [
   { label: 'Bear', price: 75 },
   { label: 'Low', price: 90 },
   { label: 'Current', price: 110 },
-  { label: 'High', price: 125 },
-  { label: 'Bull', price: 150 },
+  { label: 'High', price: 150 },
+  { label: 'Bull', price: 250 },
+  { label: 'Moon', price: 400 },
+  { label: 'Proxima Centauri', price: 600 },
 ]
 
 export function computeSensitivity(state: AppState, prices: number[]) {
